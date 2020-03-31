@@ -70,3 +70,5 @@
 * [deprecated-each-syntax](rule/deprecations/deprecated-each-syntax.md)
 * [deprecated-inline-view-helper](rule/deprecations/deprecated-inline-view-helper.md)
 * [deprecated-render-helper](rule/deprecations/deprecated-render-helper.md)
+
+* [require-valid-link-to-tagname](rule/require-valid-link-to-tagname.md)
