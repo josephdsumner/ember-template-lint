@@ -1,7 +1,6 @@
 'use strict';
 
 const generateRuleTests = require('../../helpers/rule-test-harness');
-
 const ERROR_MESSAGE = require('../../../lib/rules/require-valid-link-to-tagname').ERROR_MESSAGE;
 
 generateRuleTests({
