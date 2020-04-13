@@ -9,20 +9,33 @@ generateRuleTests({
 
   config: true,
 
-  // TODO update with a good example that should pass
-  good: ['passingTest00'],
+  good: [
+    // Non-landmark elements, no roles
+    '<div></div>',
+    '<p></p>',
+
+    // Landmark elements, no roles
+    '<aside></aside>',
+    '<footer></footer>',
+    '<form></form>',
+    '<header></header>',
+    '<main></main>',
+    '<nav></nav>',
+    '<section></section>'
+
+  ],
 
   // TODO update with tests that should fail
   bad: [
-    {
-      template: 'FailingTest00 -- contains DisallowedText',
-      result: {
-        moduleId: 'layout.hbs',
-        message: ERROR_MESSAGE,
-        line: 1,
-        column: 0,
-        source: 'FailingTest00 -- contains DisallowedText',
-      },
-    },
+    // {
+    //   template: 'FailingTest00 -- contains DisallowedText',
+    //   result: {
+    //     source: 'FailingTest00 -- contains DisallowedText',
+    //     line: 1,
+    //     column: 0,
+    //     message: ERROR_MESSAGE,
+    //     moduleId: 'layout',
+    //   },
+    // },
   ],
 });
