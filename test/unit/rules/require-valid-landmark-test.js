@@ -21,21 +21,51 @@ generateRuleTests({
     '<header></header>',
     '<main></main>',
     '<nav></nav>',
-    '<section></section>'
+    '<section></section>',
 
+    // Non-landmark elements, landmark-assigning roles
+    '<div role="complementary"></div>',
+    '<div role="contentinfo"></div>',
+    '<div role="form"></div>',
+    '<div role="banner"></div>',
+    '<div role="main"></div>',
+    '<div role="navigation"></div>',
+    '<div role="region"></div>',
   ],
 
-  // TODO update with tests that should fail
+
   bad: [
-    // {
-    //   template: 'FailingTest00 -- contains DisallowedText',
-    //   result: {
-    //     source: 'FailingTest00 -- contains DisallowedText',
-    //     line: 1,
-    //     column: 0,
-    //     message: ERROR_MESSAGE,
-    //     moduleId: 'layout',
-    //   },
-    // },
+
+    // Landmark elements with role assignments
+    {
+      template: '<aside role="main"></aside>',
+      result: {
+        source: '<aside role="main"></aside>',
+        line: 1,
+        column: 0,
+        message: ERROR_MESSAGE,
+        moduleId: 'layout',
+      },
+    },
+    {
+      template: '<aside role=""></aside>',
+      result: {
+        source: '<aside role=""></aside>',
+        line: 1,
+        column: 0,
+        message: ERROR_MESSAGE,
+        moduleId: 'layout',
+      },
+    },
+    {
+      template: '<aside role="some-role"></aside>',
+      result: {
+        source: '<aside role="some-role"></aside>',
+        line: 1,
+        column: 0,
+        message: ERROR_MESSAGE,
+        moduleId: 'layout',
+      },
+    },
   ],
 });
