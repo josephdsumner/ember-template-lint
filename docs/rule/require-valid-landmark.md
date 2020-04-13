@@ -1,6 +1,12 @@
-# TODO: rule-name-goes-here
+# require-valid-landmark
 
 TODO: context about the problem goes here
+ARIA landmarks provide a means to convey a web page's organization and structure by dividing its content into distinct, perceivable areas. Notably, because the page areas defined by ARIA landmarks can be programmatically determined, assistive technologies can use them to ease the burden of whole-page navigation for differently-abled users.
+
+Specifically, ARIA landmarks can be implemented with either:
+
+* Landmark-defining HTML sectioning elements (`<header>Company Name</header>`)
+* Landmark-defining role attributes (`<div role="banner">Company Name</div>`)
 
 TODO: what the rule does goes here
 
