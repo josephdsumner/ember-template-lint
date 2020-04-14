@@ -31,6 +31,11 @@ generateRuleTests({
     '<div role="main"></div>',
     '<div role="navigation"></div>',
     '<div role="region"></div>',
+
+    // Exceptions
+    '<form role="search"></form>',
+    '<footer role="contentinfo"></footer>',
+    
   ],
 
 
@@ -67,5 +72,6 @@ generateRuleTests({
         moduleId: 'layout',
       },
     },
+
   ],
 });
