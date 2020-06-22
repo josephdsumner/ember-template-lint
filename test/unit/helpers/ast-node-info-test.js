@@ -34,3 +34,29 @@ describe('hasChildren', function () {
     expect(AstNodeInfo.hasChildren(ast.body[0])).toBe(true);
   });
 });
+
+describe('elementAttributeValue', function () {
+  it('Default: returns an AST Node', function () {
+    let raw = '<div id="text-node-attr-value"></div>';
+    let ast = parse(raw);
+    let attrValue = AstNodeInfo.elementAttributeValue(ast.body[0], 'id');
+    expect(attrValue.type).toEqual('TextNode');
+    expect(attrValue.chars).toEqual('text-node-attr-value');
+  });
+
+  it('Unwrap option set to `false`: returns an AST Node', function () {
+    let raw = '<div id="text-node-attr-value"></div>';
+    let ast = parse(raw);
+    let attrValue = AstNodeInfo.elementAttributeValue(ast.body[0], 'id', false);
+    expect(attrValue.type).toEqual('TextNode');
+    expect(attrValue.chars).toEqual('text-node-attr-value');
+  });
+
+  it('Unwrap option set to `true`: returns a String', function () {
+    let raw = '<div id="text-node-attr-value"></div>';
+    let ast = parse(raw);
+    let attrValue = AstNodeInfo.elementAttributeValue(ast.body[0], 'id', true);
+    expect(typeof attrValue).toEqual('string');
+    expect(attrValue).toEqual('text-node-attr-value');
+  });
+});
