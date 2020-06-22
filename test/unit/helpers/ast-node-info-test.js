@@ -35,28 +35,87 @@ describe('hasChildren', function () {
   });
 });
 
-describe('elementAttributeValue', function () {
-  it('Default: returns an AST Node', function () {
+describe('attributeValue: TextNode', function () {
+  it('Unwrap option default: returns AST Node', function () {
     let raw = '<div id="text-node-attr-value"></div>';
     let ast = parse(raw);
-    let attrValue = AstNodeInfo.elementAttributeValue(ast.body[0], 'id');
+    let attrValue = AstNodeInfo.attributeValue(AstNodeInfo.findAttribute(ast.body[0], 'id'));
     expect(attrValue.type).toEqual('TextNode');
     expect(attrValue.chars).toEqual('text-node-attr-value');
   });
 
-  it('Unwrap option set to `false`: returns an AST Node', function () {
+  it('Unwrap option `false`: returns AST Node', function () {
     let raw = '<div id="text-node-attr-value"></div>';
     let ast = parse(raw);
-    let attrValue = AstNodeInfo.elementAttributeValue(ast.body[0], 'id', false);
+    let attrValue = AstNodeInfo.attributeValue(AstNodeInfo.findAttribute(ast.body[0], 'id'), false);
     expect(attrValue.type).toEqual('TextNode');
     expect(attrValue.chars).toEqual('text-node-attr-value');
   });
 
-  it('Unwrap option set to `true`: returns a String', function () {
+  it('Unwrap option `true`: returns String', function () {
     let raw = '<div id="text-node-attr-value"></div>';
     let ast = parse(raw);
-    let attrValue = AstNodeInfo.elementAttributeValue(ast.body[0], 'id', true);
+    let attrValue = AstNodeInfo.attributeValue(AstNodeInfo.findAttribute(ast.body[0], 'id'), true);
     expect(typeof attrValue).toEqual('string');
     expect(attrValue).toEqual('text-node-attr-value');
+  });
+});
+
+describe('hasAttributeValue: TextNode', function () {
+  it('Unwrap option default: returns AST Node', function () {
+    let raw = '<div id="text-node-attr-value"></div>';
+    let ast = parse(raw);
+    let hasAttrValue = AstNodeInfo.hasAttributeValue(ast.body[0], 'id', 'text-node-attr-value');
+    expect(hasAttrValue).toBe(false);
+  });
+
+  it('Unwrap option `false`: returns AST Node', function () {
+    let raw = '<div id="text-node-attr-value"></div>';
+    let ast = parse(raw);
+    let hasAttrValue = AstNodeInfo.hasAttributeValue(
+      ast.body[0],
+      'id',
+      'text-node-attr-value',
+      false
+    );
+    expect(hasAttrValue).toBe(false);
+  });
+
+  it('Unwrap option `true`: returns String', function () {
+    let raw = '<div id="text-node-attr-value"></div>';
+    let ast = parse(raw);
+    let hasAttrValue = AstNodeInfo.hasAttributeValue(
+      ast.body[0],
+      'id',
+      'text-node-attr-value',
+      true
+    );
+    expect(hasAttrValue).toBe(true);
+  });
+});
+
+describe('elementAttributeValue with TextNode', function () {
+  it('Unwrap option default: returns AST Node', function () {
+    let raw = '<div id="text-node-attr-value"></div>';
+    let ast = parse(raw);
+    let eleAttrValue = AstNodeInfo.elementAttributeValue(ast.body[0], 'id');
+    expect(eleAttrValue.type).toEqual('TextNode');
+    expect(eleAttrValue.chars).toEqual('text-node-attr-value');
+  });
+
+  it('Unwrap option `false`: returns AST Node', function () {
+    let raw = '<div id="text-node-attr-value"></div>';
+    let ast = parse(raw);
+    let eleAttrValue = AstNodeInfo.elementAttributeValue(ast.body[0], 'id', false);
+    expect(eleAttrValue.type).toEqual('TextNode');
+    expect(eleAttrValue.chars).toEqual('text-node-attr-value');
+  });
+
+  it('Unwrap option `true`: returns String', function () {
+    let raw = '<div id="text-node-attr-value"></div>';
+    let ast = parse(raw);
+    let eleAttrValue = AstNodeInfo.elementAttributeValue(ast.body[0], 'id', true);
+    expect(typeof eleAttrValue).toEqual('string');
+    expect(eleAttrValue).toEqual('text-node-attr-value');
   });
 });
