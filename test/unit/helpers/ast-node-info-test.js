@@ -35,6 +35,10 @@ describe('hasChildren', function () {
   });
 });
 
+// attributeValue unwrapping
+// -------------------------
+// New behavior
+// TextNode: only unwrap when unwrapTextNode option is set to `true`
 describe('attributeValue: TextNode', function () {
   it('Unwrap option default: returns AST Node', function () {
     let raw = '<div id="text-node-attr-value"></div>';
@@ -117,5 +121,54 @@ describe('elementAttributeValue with TextNode', function () {
     let eleAttrValue = AstNodeInfo.elementAttributeValue(ast.body[0], 'id', true);
     expect(typeof eleAttrValue).toEqual('string');
     expect(eleAttrValue).toEqual('text-node-attr-value');
+  });
+});
+
+// Checks to make sure other node types are unaffected (always wrapped)
+describe('attributeValue: MustacheStatement', function () {
+  it('Unwrap option default: returns AST Node', function () {
+    let raw = '<div id={{mustache-statement-attr-value}}></div>';
+    let ast = parse(raw);
+    let attrValue = AstNodeInfo.attributeValue(AstNodeInfo.findAttribute(ast.body[0], 'id'));
+    expect(attrValue.type).toEqual('MustacheStatement');
+    // expect(attrValue.chars).toEqual('text-node-attr-value');
+  });
+
+  it('Unwrap option `false`: returns AST Node', function () {
+    let raw = '<div id={{mustache-statement-attr-value}}></div>';
+    let ast = parse(raw);
+    let attrValue = AstNodeInfo.attributeValue(AstNodeInfo.findAttribute(ast.body[0], 'id'), false);
+    expect(attrValue.type).toEqual('MustacheStatement');
+    // expect(attrValue.chars).toEqual('text-node-attr-value');
+  });
+
+  it('Unwrap option `true`: returns AST Node', function () {
+    let raw = '<div id={{mustache-statement-attr-value}}></div>';
+    let ast = parse(raw);
+    let attrValue = AstNodeInfo.attributeValue(AstNodeInfo.findAttribute(ast.body[0], 'id'), true);
+    expect(attrValue.type).toEqual('MustacheStatement');
+  });
+});
+
+describe('attributeValue: ConcatStatement', function () {
+  it('Unwrap option default: returns AST Node', function () {
+    let raw = '<div id="concat-statement-{{attr-value}}"></div>';
+    let ast = parse(raw);
+    let attrValue = AstNodeInfo.attributeValue(AstNodeInfo.findAttribute(ast.body[0], 'id'));
+    expect(attrValue.type).toEqual('ConcatStatement');
+  });
+
+  it('Unwrap option `false`: returns AST Node', function () {
+    let raw = '<div id="concat-statement-{{attr-value}}"></div>';
+    let ast = parse(raw);
+    let attrValue = AstNodeInfo.attributeValue(AstNodeInfo.findAttribute(ast.body[0], 'id'), false);
+    expect(attrValue.type).toEqual('ConcatStatement');
+  });
+
+  it('Unwrap option `true`: returns AST Node', function () {
+    let raw = '<div id="concat-statement-{{attr-value}}"></div>';
+    let ast = parse(raw);
+    let attrValue = AstNodeInfo.attributeValue(AstNodeInfo.findAttribute(ast.body[0], 'id'), true);
+    expect(attrValue.type).toEqual('ConcatStatement');
   });
 });
