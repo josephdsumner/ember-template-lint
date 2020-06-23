@@ -116,7 +116,7 @@ describe('elementAttributeValue: TextNode', function () {
 
 // Checks to make sure other node types are unaffected (always wrapped)
 describe('attributeValue: MustacheStatement', function () {
-  let raw = '<div id={{mustache-statement-attr-value}}></div>';
+  let raw = '<div id={{"mustache-statement-attr-value"}}></div>';
   let ast = parse(raw);
 
   it('Unwrap option default: returns AST Node', function () {
@@ -135,8 +135,29 @@ describe('attributeValue: MustacheStatement', function () {
   });
 });
 
+describe('hasAttributeValue: MustacheStatement', function () {
+  let raw = '<div id={{"mustache-statement-attr-value"}}></div>';
+  let ast = parse(raw);
+  let exp = AstNodeInfo.findAttribute(ast.body[0], 'id').value;
+
+  it('Unwrap option default: returns AST Node', function () {
+    let hasAttrValue = AstNodeInfo.hasAttributeValue(ast.body[0], 'id', exp);
+    expect(hasAttrValue).toBe(true);
+  });
+
+  it('Unwrap option `false`: returns AST Node', function () {
+    let hasAttrValue = AstNodeInfo.hasAttributeValue(ast.body[0], 'id', exp, false);
+    expect(hasAttrValue).toBe(true);
+  });
+
+  it('Unwrap option `true`: returns AST Node', function () {
+    let hasAttrValue = AstNodeInfo.hasAttributeValue(ast.body[0], 'id', exp, true);
+    expect(hasAttrValue).toBe(true);
+  });
+});
+
 describe('attributeValue: ConcatStatement', function () {
-  let raw = '<div id="concat-statement-{{attr-value}}"></div>';
+  let raw = '<div id="concat-statement-{{"attr-value"}}"></div>';
   let ast = parse(raw);
 
   it('Unwrap option default: returns AST Node', function () {
