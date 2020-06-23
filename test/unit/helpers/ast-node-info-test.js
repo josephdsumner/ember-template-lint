@@ -156,6 +156,27 @@ describe('hasAttributeValue: MustacheStatement', function () {
   });
 });
 
+describe('elementAttributeValue: MustacheStatement', function () {
+  let raw = '<div id={{"mustache-statement-attr-value"}}></div>';
+  let ast = parse(raw);
+  let exp = AstNodeInfo.findAttribute(ast.body[0], 'id').value;
+
+  it('Unwrap option default: returns AST Node', function () {
+    let eleAttrValue = AstNodeInfo.elementAttributeValue(ast.body[0], 'id');
+    expect(eleAttrValue).toEqual(exp);
+  });
+
+  it('Unwrap option `false`: returns AST Node', function () {
+    let eleAttrValue = AstNodeInfo.elementAttributeValue(ast.body[0], 'id', false);
+    expect(eleAttrValue).toEqual(exp);
+  });
+
+  it('Unwrap option `true`: returns AST Node', function () {
+    let eleAttrValue = AstNodeInfo.elementAttributeValue(ast.body[0], 'id', true);
+    expect(eleAttrValue).toEqual(exp);
+  });
+});
+
 describe('attributeValue: ConcatStatement', function () {
   let raw = '<div id="concat-statement-{{"attr-value"}}"></div>';
   let ast = parse(raw);
@@ -196,3 +217,4 @@ describe('hasAttributeValue: ConcatStatement', function () {
     expect(hasAttrValue).toBe(true);
   });
 });
+
