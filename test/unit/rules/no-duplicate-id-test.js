@@ -162,5 +162,26 @@ generateRuleTests({
         source: '{{#bar elementId="id-00"}}{{/bar}}',
       },
     },
+
+    // NumberLiteral
+    {
+      template: '<div id="1234"></div><div id={{1234}}></div>',
+      result: {
+        message: ERROR_MESSAGE,
+        line: 1,
+        column: 26,
+        source: 'id={{1234}}',
+      },
+    },
+
+    {
+      template: '<div id={{1234}}></div><div id="1234"></div>',
+      result: {
+        message: ERROR_MESSAGE,
+        line: 1,
+        column: 28,
+        source: 'id="1234"',
+      },
+    },
   ],
 });
