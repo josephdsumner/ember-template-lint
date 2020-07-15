@@ -30,6 +30,11 @@ generateRuleTests({
     // BlockStatement
     '<div id="id-00"></div>{{#foo elementId="id-01"}}{{/foo}}',
     '{{#foo elementId="id-01"}}{{/foo}}<div id="id-00"></div>',
+
+    // [WIP] Number + StringLiteral + Dynamic
+    '<div id={{1234}}></div>',
+    '<div id={{"id-00"}}></div>',
+    '<div id={{this.foo}}></div>',
   ],
 
   bad: [
@@ -163,25 +168,25 @@ generateRuleTests({
       },
     },
 
-    // NumberLiteral
-    {
-      template: '<div id="1234"></div><div id={{1234}}></div>',
-      result: {
-        message: ERROR_MESSAGE,
-        line: 1,
-        column: 26,
-        source: 'id={{1234}}',
-      },
-    },
+    // // NumberLiteral
+    // {
+    //   template: '<div id="1234"></div><div id={{1234}}></div>',
+    //   result: {
+    //     message: ERROR_MESSAGE,
+    //     line: 1,
+    //     column: 26,
+    //     source: 'id={{1234}}',
+    //   },
+    // },
 
-    {
-      template: '<div id={{1234}}></div><div id="1234"></div>',
-      result: {
-        message: ERROR_MESSAGE,
-        line: 1,
-        column: 28,
-        source: 'id="1234"',
-      },
-    },
+    // {
+    //   template: '<div id={{1234}}></div><div id="1234"></div>',
+    //   result: {
+    //     message: ERROR_MESSAGE,
+    //     line: 1,
+    //     column: 28,
+    //     source: 'id="1234"',
+    //   },
+    // },
   ],
 });
