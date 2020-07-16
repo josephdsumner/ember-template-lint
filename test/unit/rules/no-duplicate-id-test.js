@@ -32,9 +32,11 @@ generateRuleTests({
     '{{#foo elementId="id-01"}}{{/foo}}<div id="id-00"></div>',
 
     // [WIP] Number + StringLiteral + Dynamic
-    '<div id={{1234}}></div>',
-    '<div id={{"id-00"}}></div>',
-    '<div id={{this.foo}}></div>',
+    '<div id={{1234}}></div><div id={{5678}}></div>',
+    '<div id={{"1234"}}></div><div id={{"5678"}}></div>',
+    '<div id={{"id-00"}}></div><div id={{"id-01"}}></div>',
+    '<div id={{this.foo}}></div><div id={{this.bar}}></div>',
+    '{{foo id="id-00"}}{{foo id="id-01"}}',
   ],
 
   bad: [
@@ -188,5 +190,16 @@ generateRuleTests({
     //     source: 'id="1234"',
     //   },
     // },
+
+    // Mustache
+    {
+      template: '{{foo id="id-00"}}{{foo id="id-00"}}',
+      result: {
+        message: ERROR_MESSAGE,
+        line: 1,
+        column: 18,
+        source: '{{foo id="id-00"}}',
+      },
+    },
   ],
 });
