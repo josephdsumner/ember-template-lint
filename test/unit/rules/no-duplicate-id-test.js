@@ -45,6 +45,9 @@ generateRuleTests({
 
     // Mixed
     '<div id="partA{{partB}}{{"partC"}}"></div><div id="{{"partA"}}{{"partB"}}partC"></div>',
+
+    // BlockStatement if/else
+    '{{#if this.foo}}<div id="foobar"></div>{{else}}<span id="foobar"></span>{{/if}}',
   ],
 
   bad: [
@@ -245,6 +248,16 @@ generateRuleTests({
         line: 1,
         column: 32,
         source: '@elementId="id-00"',
+      },
+    },
+    {
+      template:
+        '{{#if this.foo}}<div id="foobar"></div><span id="foobar"></span>{{else}}<span id="abc"></span>{{/if}}',
+      result: {
+        message: ERROR_MESSAGE,
+        line: 1,
+        column: 45,
+        source: 'id="foobar"',
       },
     },
   ],
